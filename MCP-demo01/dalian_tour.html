@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大连一日游行程规划</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 基础样式 */
+        :root {
+            --primary-color: #0066cc;
+            --secondary-color: #f0f7ff;
+            --accent-color: #ff6600;
+            --text-color: #333333;
+            --light-gray: #f5f5f5;
+            --border-color: #dddddd;
+            --highlight-color: #fffbeb;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            color: var(--text-color);
+            line-height: 1.5;
+            background-color: white;
+            /* A4尺寸 */
+            width: 210mm;
+            height: 297mm;
+            margin: 0 auto;
+            padding: 10mm;
+            position: relative;
+        }
+        
+        /* 打印样式 */
+        @media print {
+            body {
+                width: 210mm;
+                height: 297mm;
+                margin: 0;
+                padding: 10mm;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            .page-container {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+        
+        /* 页面容器 */
+        .page-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+        }
+        
+        /* 标题区域 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 5mm;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 5mm;
+        }
+        
+        .title-section {
+            flex: 2;
+        }
+        
+        .title-section h1 {
+            font-size: 24pt;
+            color: var(--primary-color);
+            margin-bottom: 2mm;
+        }
+        
+        .title-section p {
+            font-size: 10pt;
+            color: var(--text-color);
+        }
+        
+        .weather-section {
+            flex: 1;
+            text-align: right;
+            background-color: var(--secondary-color);
+            padding: 2mm;
+            border-radius: 3mm;
+        }
+        
+        .weather-section p {
+            font-size: 9pt;
+            margin-bottom: 1mm;
+        }
+        
+        /* 行程概览 */
+        .overview {
+            margin-bottom: 5mm;
+            padding: 3mm;
+            background-color: var(--secondary-color);
+            border-radius: 2mm;
+        }
+        
+        .overview h2 {
+            font-size: 12pt;
+            color: var(--primary-color);
+            margin-bottom: 2mm;
+        }
+        
+        .overview-content {
+            display: flex;
+            justify-content: space-between;
+            font-size: 9pt;
+        }
+        
+        .overview-item {
+            flex: 1;
+            padding: 2mm;
+            text-align: center;
+        }
+        
+        .overview-item i {
+            font-size: 14pt;
+            color: var(--primary-color);
+            margin-bottom: 1mm;
+        }
+        
+        /* 详细时间表 */
+        .schedule {
+            margin-bottom: 5mm;
+        }
+        
+        .schedule h2 {
+            font-size: 12pt;
+            color: var(--primary-color);
+            margin-bottom: 2mm;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 9pt;
+        }
+        
+        .schedule-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2mm;
+            text-align: left;
+        }
+        
+        .schedule-table td {
+            padding: 2mm;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .schedule-table tr:nth-child(even) {
+            background-color: var(--light-gray);
+        }
+        
+        /* 交通信息 */
+        .transportation {
+            margin-bottom: 5mm;
+        }
+        
+        .transportation h2 {
+            font-size: 12pt;
+            color: var(--primary-color);
+            margin-bottom: 2mm;
+        }
+        
+        .transport-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3mm;
+            font-size: 9pt;
+        }
+        
+        .transport-item {
+            padding: 2mm;
+            background-color: var(--light-gray);
+            border-radius: 2mm;
+        }
+        
+        .transport-item h3 {
+            font-size: 10pt;
+            color: var(--primary-color);
+            margin-bottom: 1mm;
+        }
+        
+        /* 餐饮推荐 */
+        .food {
+            margin-bottom: 5mm;
+        }
+        
+        .food h2 {
+            font-size: 12pt;
+            color: var(--primary-color);
+            margin-bottom: 2mm;
+        }
+        
+        .food-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 3mm;
+            font-size: 9pt;
+        }
+        
+        .food-item {
+            padding: 2mm;
+            background-color: var(--light-gray);
+            border-radius: 2mm;
+        }
+        
+        .food-item h3 {
+            font-size: 10pt;
+            color: var(--primary-color);
+            margin-bottom: 1mm;
+        }
+        
+        /* 实用信息 */
+        .useful-info {
+            margin-bottom: 5mm;
+        }
+        
+        .useful-info h2 {
+            font-size: 12pt;
+            color: var(--primary-color);
+            margin-bottom: 2mm;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3mm;
+            font-size: 9pt;
+        }
+        
+        .info-item {
+            padding: 2mm;
+            background-color: var(--highlight-color);
+            border-left: 3px solid var(--accent-color);
+            border-radius: 1mm;
+        }
+        
+        .info-item h3 {
+            font-size: 10pt;
+            color: var(--accent-color);
+            margin-bottom: 1mm;
+        }
+        
+        /* 页脚 */
+        .footer {
+            position: absolute;
+            bottom: 5mm;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 8pt;
+            color: #999;
+        }
+        
+        /* 打印按钮 */
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        
+        .print-btn:hover {
+            background-color: #0055aa;
+        }
+        
+        /* 剪裁线 */
+        .crop-marks {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .crop-mark {
+            position: absolute;
+            border-style: dashed;
+            border-color: #ccc;
+            border-width: 0;
+        }
+        
+        .crop-mark.top {
+            top: 5mm;
+            left: 5mm;
+            right: 5mm;
+            border-top-width: 1px;
+        }
+        
+        .crop-mark.bottom {
+            bottom: 5mm;
+            left: 5mm;
+            right: 5mm;
+            border-top-width: 1px;
+        }
+        
+        .crop-mark.left {
+            left: 5mm;
+            top: 5mm;
+            bottom: 5mm;
+            border-left-width: 1px;
+        }
+        
+        .crop-mark.right {
+            right: 5mm;
+            top: 5mm;
+            bottom: 5mm;
+            border-left-width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">
+        <i class="fas fa-print"></i> 打印行程
+    </button>
+    
+    <div class="page-container">
+        <!-- 剪裁线 -->
+        <div class="crop-marks no-print">
+            <div class="crop-mark top"></div>
+            <div class="crop-mark bottom"></div>
+            <div class="crop-mark left"></div>
+            <div class="crop-mark right"></div>
+        </div>
+        
+        <!-- 标题区域 -->
+        <div class="header">
+            <div class="title-section">
+                <h1>大连一日游</h1>
+                <p>日期：2023年7月15日（星期六）</p>
+                <p>行程规划：探索浪漫海滨城市，体验独特的欧陆风情与海洋魅力</p>
+            </div>
+            <div class="weather-section">
+                <p><i class="fas fa-sun"></i> 天气：晴，26°C/18°C</p>
+                <p><i class="fas fa-wind"></i> 东南风 3-4级</p>
+                <p><i class="fas fa-umbrella"></i> 建议：防晒，轻便服装</p>
+            </div>
+        </div>
+        
+        <!-- 行程概览 -->
+        <div class="overview">
+            <h2><i class="fas fa-map-marked-alt"></i> 行程概览</h2>
+            <div class="overview-content">
+                <div class="overview-item">
+                    <i class="fas fa-sun"></i>
+                    <h3>上午</h3>
+                    <p>星海广场</p>
+                    <p>滨海路风景线</p>
+                </div>
+                <div class="overview-item">
+                    <i class="fas fa-utensils"></i>
+                    <h3>中午</h3>
+                    <p>老虎滩海洋公园</p>
+                    <p>海鲜午餐</p>
+                </div>
+                <div class="overview-item">
+                    <i class="fas fa-landmark"></i>
+                    <h3>下午</h3>
+                    <p>俄罗斯风情街</p>
+                    <p>中山广场</p>
+                </div>
+                <div class="overview-item">
+                    <i class="fas fa-moon"></i>
+                    <h3>晚上</h3>
+                    <p>圣亚海洋世界</p>
+                    <p>劈柴院美食街</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 详细时间表 -->
+        <div class="schedule">
+            <h2><i class="fas fa-clock"></i> 详细时间表</h2>
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>活动</th>
+                        <th>地点</th>
+                        <th>详情</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>09:00-10:30</td>
+                        <td>游览星海广场</td>
+                        <td>沙河口区中山路</td>
+                        <td>免费，亚洲最大的城市广场之一</td>
+                    </tr>
+                    <tr>
+                        <td>10:30-12:00</td>
+                        <td>滨海路风景线</td>
+                        <td>滨海路</td>
+                        <td>免费，大连最美海岸线</td>
+                    </tr>
+                    <tr>
+                        <td>12:00-14:00</td>
+                        <td>老虎滩海洋公园</td>
+                        <td>中山区滨海路9号</td>
+                        <td>门票：175元，含极地馆</td>
+                    </tr>
+                    <tr>
+                        <td>14:00-15:30</td>
+                        <td>俄罗斯风情街</td>
+                        <td>中山区解放路</td>
+                        <td>免费，欧式建筑群</td>
+                    </tr>
+                    <tr>
+                        <td>15:30-17:00</td>
+                        <td>中山广场</td>
+                        <td>中山区人民路</td>
+                        <td>免费，欧式建筑环绕的广场</td>
+                    </tr>
+                    <tr>
+                        <td>17:30-19:30</td>
+                        <td>圣亚

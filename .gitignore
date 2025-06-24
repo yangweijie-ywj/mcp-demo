@@ -1,0 +1,15 @@
+# macOS 系统文件
+.DS_Store
+.AppleDouble
+
+# Python 开发文件
+__pycache__/
+*.pyc
+venv/
+.env
+*.log
+
+# 编译产物
+build/
+dist/
+*.egg-info/
