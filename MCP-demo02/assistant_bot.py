@@ -18,7 +18,7 @@ ROOT_RESOURCE = os.path.join(os.path.dirname(__file__), 'resource')
 
 # 配置 DashScope
 import dashscope
-dashscope.api_key = os.getenv('DASHSCOPE_API_KEY', 'sk-455ca9efed46445b9683317aaadf9123')  # 从环境变量获取 API Key
+dashscope.api_key = os.getenv('DASHSCOPE_API_KEY', '你的key')  # 从环境变量获取 API Key
 dashscope.timeout = 30  # 设置超时时间为 30 秒
 
 def init_agent_service():
